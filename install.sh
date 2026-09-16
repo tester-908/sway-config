@@ -58,7 +58,6 @@ sudo pacman -S --needed --noconfirm \
     slurp \
     wl-clipboard \
     jq \
-    swaynag \
     polkit-gnome \
     pipewire \
     pipewire-alsa \
