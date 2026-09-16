@@ -1,0 +1,26 @@
+
+#!/bin/bash
+
+# If Asciiquarium is already running, close it and leave aquarium mode
+if swaymsg -t get_tree | jq -e '.. | objects | select(.app_id? == "asciiquarium")' >/dev/null; then
+    swaymsg '[app_id="asciiquarium"] kill'
+    swaymsg mode "default"
+    exit 0
+fi
+
+# Launch Asciiquarium on every active monitor
+for output in $(swaymsg -t get_outputs -r | jq -r '.[] | select(.active) | .name'); do
+    kitty \
+        --class asciiquarium \
+        --override confirm_os_window_close=0 \
+        asciiquarium &
+done
+
+# Wait for the windows to appear
+sleep 0.5
+
+# Fullscreen all Asciiquarium windows
+swaymsg '[app_id="asciiquarium"] fullscreen enable'
+
+# Enter aquarium mode
+swaymsg mode "aquarium"

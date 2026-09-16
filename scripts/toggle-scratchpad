@@ -1,0 +1,11 @@
+#!/bin/bash
+
+SCRATCHPAD="scratchpad"
+
+CURRENT=$(swaymsg -t get_workspaces | jq -r '.[] | select(.focused).name')
+
+if [ "$CURRENT" = "$SCRATCHPAD" ]; then
+    swaymsg workspace back_and_forth
+else
+    swaymsg workspace "$SCRATCHPAD"
+fi
