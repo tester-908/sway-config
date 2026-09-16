@@ -67,7 +67,6 @@ sudo pacman -S --needed --noconfirm \
     asciiquarium \
     git \
     stow \
-    zsh \
     wget \
     curl \
     nano \
@@ -83,7 +82,8 @@ sudo pacman -S --needed --noconfirm \
     cmake \
     openssh \
     btop \
-    base-devel
+    base-devel \
+    python-pipx
 
 # ------------------------------------------------------------
 # Install paru
@@ -187,26 +187,13 @@ cp -r "$DOTFILES_DIR/wofi/." "$HOME/.config/wofi/"
 mkdir -p "$HOME/.config/alacritty"
 cp -r "$DOTFILES_DIR/alacritty/." "$HOME/.config/alacritty/"
 
+# Install Bash configuration
+cp "$DOTFILES_DIR/bash/.bashrc" "$HOME/.bashrc"
 
-# Install Oh My Zsh
-if [ ! -d "$HOME/.oh-my-zsh" ]; then
-    git clone https://github.com/ohmyzsh/ohmyzsh.git "$HOME/.oh-my-zsh"
+# Install terminal-wakatime
+if ! command -v terminal-wakatime >/dev/null 2>&1; then
+    pipx install terminal-wakatime
 fi
-
-# Install Zsh plugins
-if [ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions" ]; then
-    git clone https://github.com/zsh-users/zsh-autosuggestions.git \
-        "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
-fi
-
-if [ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting" ]; then
-    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
-        "$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
-fi
-
-# Install Zsh configuration
-cp "$DOTFILES_DIR/zsh/.zshrc" "$HOME/.zshrc"
-cp "$DOTFILES_DIR/zsh/.zshrc" "$HOME/.zshrc"
 
 # ------------------------------------------------------------
 # Install scripts
@@ -245,15 +232,18 @@ sudo systemctl enable --now NetworkManager
 sudo systemctl enable --now bluetooth
 
 # ------------------------------------------------------------
-# Zsh
+# Bash
 # ------------------------------------------------------------
 
 echo
-echo "==> Setting Zsh as default shell..."
+echo "==> Setting Bash as default shell..."
 
-if [ "$SHELL" != "/bin/zsh" ]; then
-    chsh -s /bin/zsh
+if [ "$SHELL" != "/bin/bash" ]; then
+    chsh -s /bin/bash
 fi
+
+# Install Bash configuration
+cp "$DOTFILES_DIR/bash/.bashrc" "$HOME/.bashrc"
 
 # ------------------------------------------------------------
 # Sway config check
