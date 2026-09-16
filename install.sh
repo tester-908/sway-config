@@ -175,6 +175,18 @@ echo "==> Installing Sway config..."
 
 cp "$DOTFILES_DIR/config" "$HOME/.config/sway/config"
 
+# Install Waybar
+mkdir -p "$HOME/.config/waybar"
+cp -r "$DOTFILES_DIR/waybar/." "$HOME/.config/waybar/"
+
+# Install Wofi
+mkdir -p "$HOME/.config/wofi"
+cp -r "$DOTFILES_DIR/wofi/." "$HOME/.config/wofi/"
+
+# Install Alacritty
+mkdir -p "$HOME/.config/alacritty"
+cp -r "$DOTFILES_DIR/alacritty/." "$HOME/.config/alacritty/"
+
 # ------------------------------------------------------------
 # Install scripts
 # ------------------------------------------------------------
