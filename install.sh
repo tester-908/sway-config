@@ -8,7 +8,7 @@ set -e
 # ============================================================
 
 REPO_URL="https://github.com/tester-908/sway-config.git"
-DOTFILES_DIR="$HOME/.dotfiles-sway"
+DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 echo "======================================"
 echo "      Sway Environment Installer"
