@@ -1,0 +1,12 @@
+show=drun
+width=600
+height=400
+location=center
+prompt=Search
+filter_rate=100
+allow_markup=true
+no_actions=true
+halign=fill
+orientation=vertical
+gtk_dark=true
+allow_images=true
