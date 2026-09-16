@@ -187,6 +187,9 @@ cp -r "$DOTFILES_DIR/wofi/." "$HOME/.config/wofi/"
 mkdir -p "$HOME/.config/alacritty"
 cp -r "$DOTFILES_DIR/alacritty/." "$HOME/.config/alacritty/"
 
+# Install Zsh configuration
+cp "$DOTFILES_DIR/zsh/.zshrc" "$HOME/.zshrc"
+
 # ------------------------------------------------------------
 # Install scripts
 # ------------------------------------------------------------
