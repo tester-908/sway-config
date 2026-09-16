@@ -82,7 +82,8 @@ sudo pacman -S --needed --noconfirm \
     cmake \
     openssh \
     btop \
-    base-devel
+    base-devel \
+    gdm
 
 # ------------------------------------------------------------
 # Install paru
@@ -238,6 +239,15 @@ fi
 
 # Install Bash configuration
 cp "$DOTFILES_DIR/bash/.bashrc" "$HOME/.bashrc"
+
+# ------------------------------------------------------------
+# GDM
+# ------------------------------------------------------------
+
+echo
+echo "==> Enabling GDM login screen..."
+
+sudo systemctl enable gdm.service
 
 # ------------------------------------------------------------
 # Sway config check
