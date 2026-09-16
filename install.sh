@@ -82,8 +82,7 @@ sudo pacman -S --needed --noconfirm \
     cmake \
     openssh \
     btop \
-    base-devel \
-    python-pipx
+    base-devel
 
 # ------------------------------------------------------------
 # Install paru
@@ -189,11 +188,6 @@ cp -r "$DOTFILES_DIR/alacritty/." "$HOME/.config/alacritty/"
 
 # Install Bash configuration
 cp "$DOTFILES_DIR/bash/.bashrc" "$HOME/.bashrc"
-
-# Install terminal-wakatime
-if ! command -v terminal-wakatime >/dev/null 2>&1; then
-    pipx install terminal-wakatime
-fi
 
 # ------------------------------------------------------------
 # Install scripts
