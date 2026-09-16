@@ -83,7 +83,8 @@ sudo pacman -S --needed --noconfirm \
     openssh \
     btop \
     base-devel \
-    gdm
+    gdm \
+    swaybg
 
 # ------------------------------------------------------------
 # Install paru
