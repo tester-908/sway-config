@@ -187,7 +187,24 @@ cp -r "$DOTFILES_DIR/wofi/." "$HOME/.config/wofi/"
 mkdir -p "$HOME/.config/alacritty"
 cp -r "$DOTFILES_DIR/alacritty/." "$HOME/.config/alacritty/"
 
-# Install Zsh configuration
+# Install Oh My Zsh
+if [ ! -d "$HOME/.oh-my-zsh" ]; then
+    RUNZSH=no CHSH=no KEEP_ZSHRC=yes \
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+fi
+
+# Install Zsh plugins
+if [ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions" ]; then
+    git clone https://github.com/zsh-users/zsh-autosuggestions \
+        "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
+fi
+
+if [ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting" ]; then
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
+        "$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
+fi
+
+# Install our Zsh configuration
 cp "$DOTFILES_DIR/zsh/.zshrc" "$HOME/.zshrc"
 
 # ------------------------------------------------------------
