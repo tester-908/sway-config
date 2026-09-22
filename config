@@ -52,9 +52,9 @@ bindsym Print+Ctrl+Shift exec grim -g "$(slurp -d)" - | wl-copy
 
 bindsym $mod+Return exec $term
 bindsym $mod+b exec firefox
-bindsym $mod+Shift+e exec nautilus
+bindsym $mod+e exec nautilus
 bindsym $mod+Shift+q kill
-bindsym $mod+e exec wofi --show drun
+bindsym $mod+d exec wofi --show drun
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+k exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
 
