@@ -10,30 +10,96 @@
 }
 
 window#waybar {
-  background: #1b182c;
+  background: transparent;
   opacity: 0.85;
 }
 
-#window,
+/* Style the main floating popup box */
+menu {
+  background: #1b182c;
+  border: 1px solid #962a54;
+  border-radius: 1rem;
+  padding: 5px;
+}
+
+/* Style the individual rows */
+menuitem {
+  color: white;
+  background: transparent;
+  padding: 6px 16px;
+  border-radius: 0.5rem;
+}
+
+/* Force the internal text wrapper to collapse the empty icon column space */
+menuitem label {
+  margin-left: -20px; /* Pulls the text flush to the left, wiping out the empty box */
+  padding-left: 0;
+}
+
+/* Hover state when highlighting a menu action */
+menuitem:hover {
+  background: #962a54;
+  color: white;
+}
+
 #memory,
 #disk,
 #pulseaudio,
 #custom-weather,
+#custom-power,
 #cpu {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  background: #1b182c;
+}
+
+window#waybar.empty #pulseaudio {
+  border-radius: 1rem 0 0 1rem;
+}
+
+#custom-power {
+  font-size: 24px;
+}
+
+#taskbar {
+  background: #1b182c;
+  border-radius: 1rem 0 0 1rem;
+}
+
+window#waybar.empty #taskbar {
+  background: transparent;
+}
+
+#custom-weather {
+  background: #1b182c;
+  padding-left: 2rem;
+  font-weight: bold;
+  border-radius: 0 1rem 1rem 0;
+}
+
+#clock {
+  background: #1b182c;
+  padding-left: 1rem;
+  border-radius: 1rem 0 0 1rem;
+}
+
+#window {
+  background: #1b182c;
+  border-radius: 1rem;
+  margin-left: 0.5rem;
   padding-left: 1rem;
   padding-right: 1rem;
 }
 
-#custom-weather {
-  padding-left: 2rem;
-  font-weight: bold;
+window#waybar.empty #window {
+  background: transparent;
 }
 
 #workspaces {
   background: #962a54;
   color: white;
   font-weight: bold;
-  border-radius: 0 1rem 1rem 0;
+  border-radius: 1rem;
 }
 #workspaces button {
   background: transparent;

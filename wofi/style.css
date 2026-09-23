@@ -6,7 +6,7 @@
 
 window {
   border-radius: 1rem;
-  background: #1b182c;
+  background: transparent;
   color: white;
   padding: 1rem;
 }
@@ -38,6 +38,10 @@ window {
   background: #1f1c33;
   border-radius: 1rem;
 }
+#entry:nth-child(odd) {
+  background: #232035;
+  border-radius: 1rem;
+}
 
 #text {
   padding: 0.75rem;
@@ -45,12 +49,15 @@ window {
 }
 
 #outer-box {
-  background: transparent;
+  background: #1b182c;
+  border-radius: 1rem;
   padding: 1rem;
+  border: 1px solid #962a54;
 }
 
 #inner-box {
   background: transparent;
+  padding: 1rem;
 }
 
 #entry {

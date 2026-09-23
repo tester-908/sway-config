@@ -2,9 +2,22 @@
     "layer": "top",
     "modules-left": ["sway/workspaces", "sway/mode", "sway/window"],
     "modules-center": ["clock", "custom/weather"],
-    "modules-right": ["wlr/taskbar", "pulseaudio", "memory", "cpu"],
+    "modules-right": ["wlr/taskbar", "pulseaudio", "memory", "cpu", "custom/power"],
     "sway/window": {
-        "max-length": 50
+        "max-length": 50,
+        "format": "{title}"
+    },
+    "custom/power": {
+        "format": "⏻",
+        "tooltip": false,
+        "menu": "on-click",
+        "menu-file": "$HOME/.config/waybar/power_menu.xml",
+        "menu-actions": {
+            "shutdown": "systemctl poweroff",
+            "reboot": "systemctl reboot",
+            "suspend": "systemctl suspend",
+            "logout": "swaymsg exit"
+        }
     },
     "clock": {
         "format": "{:%a, %d. %b  %H:%M}",

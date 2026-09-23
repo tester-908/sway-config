@@ -48,7 +48,6 @@ echo
 echo "==> Installing packages..."
 
 sudo pacman -S --needed --noconfirm \
-    sway \
     waybar \
     wofi \
     kitty \
@@ -106,6 +105,8 @@ if ! command -v paru >/dev/null 2>&1; then
 else
     echo "==> paru already installed."
 fi
+
+paru -S --needed --noconfirm swayfx
 
 # ------------------------------------------------------------
 # Install VS Code
@@ -278,7 +279,7 @@ echo "       Installation complete!"
 echo "======================================"
 echo
 echo "Installed:"
-echo "  Sway"
+echo "  Swayfx"
 echo "  Waybar"
 echo "  Wofi"
 echo "  Kitty"

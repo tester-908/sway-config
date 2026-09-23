@@ -5,6 +5,18 @@ set $term kitty
 # Visual
 gaps inner 8
 
+#swayfx
+
+blur enable
+
+# Fine-tune the blur intensity (adjust values to your liking)
+blur_passes 4
+blur_radius 5
+
+default_dim_inactive 0.2
+
+corner_radius 10
+
 font pango: Iosevka 9
 
 default_border pixel 2
@@ -51,6 +63,7 @@ input type:pointer {
 bindsym Print+Ctrl+Shift exec grim -g "$(slurp -d)" - | wl-copy
 
 bindsym $mod+Return exec $term
+bindsym $mod+h exec killall -SIGUSR1 waybar
 bindsym $mod+b exec firefox
 bindsym $mod+e exec nautilus
 bindsym $mod+Shift+q kill
