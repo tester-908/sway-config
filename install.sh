@@ -50,7 +50,16 @@ echo "==> Installing packages..."
 sudo pacman -S --needed --noconfirm \
     waybar \
     wofi \
+    foot \
     kitty \
+    nwg-drawer \
+    nwg-bar \
+    wl-mirror \
+    imagemagick \
+    playerctl \
+    swaylock \
+    pacman-contrib \
+    pavucontrol \
     firefox \
     nautilus \
     grim \
@@ -164,33 +173,47 @@ fi
 echo
 echo "==> Creating directories..."
 
-mkdir -p "$HOME/.config/sway"
-mkdir -p "$HOME/.local/bin"
+mkdir -p "$HOME/.config/sway/scripts"
+mkdir -p "$HOME/.config/themes/dark"
+mkdir -p "$HOME/.config/themes/light"
+mkdir -p "$HOME/.config/themes/wallpapers"
+mkdir -p "$HOME/.config/foot"
 mkdir -p "$HOME/.images"
 
 # ------------------------------------------------------------
-# Install Sway config
+# Install Sway config & settings
 # ------------------------------------------------------------
 
 echo
 echo "==> Installing Sway config..."
 
 cp "$DOTFILES_DIR/config" "$HOME/.config/sway/config"
+cp "$DOTFILES_DIR/settings.json" "$HOME/.config/sway/settings.json"
 
-# Install Waybar
-mkdir -p "$HOME/.config/waybar"
-cp -r "$DOTFILES_DIR/waybar/." "$HOME/.config/waybar/"
+# Install Foot
+cp "$DOTFILES_DIR/foot/foot.ini" "$HOME/.config/foot/foot.ini"
 
-# Install Wofi
-mkdir -p "$HOME/.config/wofi"
-cp -r "$DOTFILES_DIR/wofi/." "$HOME/.config/wofi/"
+# ------------------------------------------------------------
+# Install themes
+# ------------------------------------------------------------
 
-# Install Alacritty
-mkdir -p "$HOME/.config/alacritty"
-cp -r "$DOTFILES_DIR/alacritty/." "$HOME/.config/alacritty/"
+echo
+echo "==> Installing themes..."
 
-# Install Bash configuration
-cp "$DOTFILES_DIR/bash/.bashrc" "$HOME/.bashrc"
+cp -r "$DOTFILES_DIR/themes/dark/." "$HOME/.config/themes/dark/"
+cp -r "$DOTFILES_DIR/themes/light/." "$HOME/.config/themes/light/"
+cp "$DOTFILES_DIR/themes/switch-theme.sh" "$HOME/.config/themes/switch-theme.sh"
+chmod +x "$HOME/.config/themes/switch-theme.sh"
+
+if [ ! -L "$HOME/.config/themes/current" ]; then
+    rm -rf "$HOME/.config/themes/current"
+    ln -s "$HOME/.config/themes/dark" "$HOME/.config/themes/current"
+fi
+
+for component in wofi nwg-drawer nwg-bar; do
+    rm -rf "$HOME/.config/$component"
+    ln -s "$HOME/.config/themes/current/$component" "$HOME/.config/$component"
+done
 
 # ------------------------------------------------------------
 # Install scripts
@@ -199,14 +222,8 @@ cp "$DOTFILES_DIR/bash/.bashrc" "$HOME/.bashrc"
 echo
 echo "==> Installing scripts..."
 
-cp "$DOTFILES_DIR/scripts/toggle-scratchpad" \
-   "$HOME/.local/bin/toggle-scratchpad"
-
-cp "$DOTFILES_DIR/scripts/asciiquarium-all" \
-   "$HOME/.local/bin/asciiquarium-all"
-
-chmod +x "$HOME/.local/bin/toggle-scratchpad"
-chmod +x "$HOME/.local/bin/asciiquarium-all"
+cp -r "$DOTFILES_DIR/scripts/." "$HOME/.config/sway/scripts/"
+chmod +x "$HOME/.config/sway/scripts/"*
 
 # ------------------------------------------------------------
 # Install wallpaper
@@ -217,6 +234,11 @@ echo "==> Installing wallpaper..."
 
 cp "$DOTFILES_DIR/wallpaper.jpg" \
    "$HOME/.images/wallpaper.jpg"
+
+if [ -z "$(ls -A "$HOME/.config/themes/wallpapers" 2>/dev/null)" ]; then
+    cp "$DOTFILES_DIR/wallpaper.jpg" \
+       "$HOME/.config/themes/wallpapers/wallpaper.jpg"
+fi
 
 # ------------------------------------------------------------
 # Enable services
@@ -282,6 +304,9 @@ echo "Installed:"
 echo "  Swayfx"
 echo "  Waybar"
 echo "  Wofi"
+echo "  nwg-drawer"
+echo "  nwg-bar"
+echo "  Foot"
 echo "  Kitty"
 echo "  Firefox"
 echo "  Nautilus"
@@ -289,23 +314,28 @@ echo "  PipeWire"
 echo "  Bluetooth"
 echo "  NetworkManager"
 echo "  Asciiquarium"
+echo "  wl-mirror"
+echo "  ImageMagick"
 echo "  VS Code"
 echo "  paru"
 echo
 echo "Your configuration is located at:"
 echo "  ~/.config/sway/config"
+echo "  ~/.config/sway/settings.json"
+echo
+echo "Themes:"
+echo "  ~/.config/themes/"
 echo
 echo "Scripts:"
-echo "  ~/.local/bin/toggle-scratchpad"
-echo "  ~/.local/bin/asciiquarium-all"
+echo "  ~/.config/sway/scripts/"
 echo
-echo "Wallpaper:"
-echo "  ~/.images/wallpaper.jpg"
+echo "Wallpapers:"
+echo "  ~/.config/themes/wallpapers/ (add more wallpapers here)"
 echo
 echo "IMPORTANT:"
 echo "Your monitor configuration is specific to your hardware."
-echo "Check the 'output' lines in ~/.config/sway/config"
-echo "before using this setup on another computer."
+echo "Check the 'output' lines in ~/.config/sway/config and"
+echo "~/.config/sway/settings.json before using this setup on another computer."
 echo
 echo "A reboot or new Sway session is recommended."
 echo

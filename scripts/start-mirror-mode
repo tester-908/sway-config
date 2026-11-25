@@ -1,0 +1,36 @@
+#!/bin/bash
+
+LOG="/tmp/mirror-mode.log"
+STATE="/tmp/mirror-mode-state"
+
+exec >> "$LOG" 2>&1
+
+echo "===== Starting aquarium mode: $(date) ====="
+
+# Save original focused workspace and output
+swaymsg -t get_workspaces | jq -r '
+    .[] | select(.focused) | [.name, .output] | @tsv
+' > /tmp/mirror-mode-state
+
+# Save the currently visible workspace on the center monitor
+swaymsg -t get_workspaces | jq -r '
+    .[] | select(.output == "HDMI-A-1" and .visible) | .name
+' > /tmp/mirror-center-state
+
+# Switch to aquarium workspace
+swaymsg 'workspace "mirror"'
+
+# Start aquarium
+swaymsg exec 'foot --app-id mirror-aquarium -e asciiquarium'
+
+# Wait for the aquarium to appear
+sleep 0
+
+# Start both mirrors independently
+wl-mirror --fullscreen-output DP-3 HDMI-A-1 \
+    >> /tmp/mirror-dp3.log 2>&1 &
+
+wl-mirror --fullscreen-output DP-1 HDMI-A-1 \
+    >> /tmp/mirror-dp1.log 2>&1 &
+
+echo "Aquarium mode started"

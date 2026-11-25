@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# Stop mirror processes
+pkill -x wl-mirror 2>/dev/null &
+
+# Close aquarium terminal
+swaymsg '[app_id="mirror-aquarium"] kill'
+
+# Restore original center workspace
+if [ -s /tmp/mirror-center-state ]; then
+    CENTER_WORKSPACE=$(cat /tmp/mirror-center-state)
+
+    swaymsg "focus output HDMI-A-1"
+    swaymsg "workspace \"$CENTER_WORKSPACE\""
+
+    rm -f /tmp/mirror-center-state
+fi
+
+# Restore original focused workspace and output
+if [ -s /tmp/mirror-mode-state ]; then
+    IFS=$'\t' read -r PREV_WORKSPACE PREV_OUTPUT < /tmp/mirror-mode-state
+
+    swaymsg "focus output \"$PREV_OUTPUT\""
+    swaymsg "workspace \"$PREV_WORKSPACE\""
+
+    rm -f /tmp/mirror-mode-state
+fi

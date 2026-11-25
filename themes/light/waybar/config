@@ -1,0 +1,169 @@
+{
+    "layer": "top",
+    "position": "top",
+
+    "height": 30,
+    "spacing": 0,
+
+    "modules-left": [
+        "sway/workspaces",
+        "sway/mode",
+        "custom/launcher"
+    ],
+
+    "modules-center": [
+        "sway/window"
+    ],
+
+    "modules-right": [
+        "custom/keyboard-layout",
+        "backlight",
+        "network",
+        "pulseaudio",
+        "temperature",
+        "cpu",
+        "memory",
+        "battery",
+        "idle_inhibitor",
+        "clock",
+        "tray",
+        "custom/pacman",
+        "custom/power"
+    ],
+
+    "sway/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": false,
+        "format": "{name}",
+        "persistent-workspaces": {
+            "1": [],
+            "2": [],
+            "3": [],
+            "4": [],
+            "5": []
+        }
+    },
+
+    "sway/mode": {
+        "format": "{}",
+        "tooltip": false
+    },
+
+    "sway/window": {
+        "format": "{}",
+        "max-length": 50,
+        "tooltip": false
+    },
+
+    "clock": {
+        "format": "{:%a %d %b  %H:%M}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+    },
+
+    "battery": {
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{capacity}% {icon}",
+        "format-charging": "{capacity}% ",
+        "format-plugged": "{capacity}% ",
+        "format-alt": "{time} {icon}",
+        "format-icons": [
+            "",
+            "",
+            "",
+            "",
+            ""
+        ],
+        "tooltip-format": "{capacity}%\n{time}"
+    },
+
+    "cpu": {
+        "format": "CPU {usage}%",
+        "tooltip": true
+    },
+
+    "memory": {
+        "format": "RAM {}%",
+        "format-alt": "RAM {used:0.1f}G/{total:0.1f}G",
+        "tooltip": true
+    },
+
+    "temperature": {
+        "critical-threshold": 80,
+        "format": "TEMP {temperatureC}°C",
+        "format-critical": "TEMP {temperatureC}°C",
+        "tooltip": true
+    },
+
+    "backlight": {
+        "format": "{percent}% {icon}",
+        "format-icons": [
+            "󰃞",
+            "󰃟",
+            "󰃠"
+        ]
+    },
+
+    "network": {
+        "format-wifi": "{essid} ",
+        "format-ethernet": "{ifname} ",
+        "format-disconnected": "󰤮",
+        "tooltip-format": "{ifname}: {ipaddr}/{cidr}\n{essid}"
+    },
+
+    "pulseaudio": {
+        "format": "{volume}% {icon}",
+        "format-muted": "Muted ",
+        "format-icons": {
+            "default": [
+                "",
+                "",
+                ""
+            ]
+        },
+        "scroll-step": 5,
+        "on-click": "pavucontrol"
+    },
+
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": ""
+        },
+        "tooltip-format-activated": "Idle inhibitor active",
+        "tooltip-format-deactivated": "Idle inhibitor inactive"
+    },
+
+    "tray": {
+        "spacing": 5
+    },
+
+    "custom/keyboard-layout": {
+        "exec": "swaymsg -t get_inputs | jq -r '[.[] | select(.type == \"keyboard\") | .xkb_active_layout_name] | first'",
+        "interval": 1,
+        "format": "{}"
+    },
+
+    "custom/launcher": {
+        "format": "",
+        "on-click": "wofi --show drun",
+        "tooltip": false
+    },
+
+    "custom/pacman": {
+        "format": " {}",
+        "exec": "checkupdates 2>/dev/null | wc -l",
+        "interval": 3600,
+        "tooltip": true,
+        "tooltip-format": "Available updates: {}"
+    },
+
+    "custom/power": {
+        "format": "",
+        "on-click": "nwg-bar -f",
+        "tooltip": false
+    }
+}

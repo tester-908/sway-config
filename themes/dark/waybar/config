@@ -11,7 +11,7 @@
         "format": "⏻",
         "tooltip": false,
         "menu": "on-click",
-        "menu-file": "$HOME/.config/waybar/power_menu.xml",
+        "menu-file": "$HOME/.config/themes/current/waybar/power_menu.xml",
         "menu-actions": {
             "shutdown": "systemctl poweroff",
             "reboot": "systemctl reboot",
@@ -21,7 +21,7 @@
     },
     "clock": {
         "format": "{:%a, %d. %b  %H:%M}",
-        "tooltip": false,
+        "tooltip": false
     },
     "wlr/taskbar": {
         "format": "{icon}",
@@ -58,7 +58,7 @@
     },
     "custom/weather": {
         "tooltip": false,
-        "exec": "curl 'https://wttr.in/Warsaw?format=1'",
+        "exec": "curl 'https://wttr.in/Stockholm?format=1'",
         "interval": 800
     }
 

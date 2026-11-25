@@ -1,11 +1,49 @@
 #!/bin/bash
 
-SCRATCHPAD="scratchpad"
+STATE_FILE="/tmp/sway-scratchpad-${UID}.state"
 
-CURRENT=$(swaymsg -t get_workspaces | jq -r '.[] | select(.focused).name')
+if ! FOCUSED_WORKSPACE=$(swaymsg -t get_workspaces | jq -er '
+    .[] | select(.focused) | [.name, .output] | @tsv
+'); then
+    echo "Unable to determine the focused workspace and output" >&2
+    exit 1
+fi
 
-if [ "$CURRENT" = "$SCRATCHPAD" ]; then
-    swaymsg workspace back_and_forth
-else
-    swaymsg workspace "$SCRATCHPAD"
+IFS=$'\t' read -r CURRENT_WORKSPACE CURRENT_OUTPUT <<< "$FOCUSED_WORKSPACE"
+
+if [[ "$CURRENT_WORKSPACE" == "scratchpad" ]]; then
+    if [[ ! -s "$STATE_FILE" ]]; then
+        echo "No previous workspace is saved for the scratchpad" >&2
+        exit 1
+    fi
+
+    IFS=$'\t' read -r PREVIOUS_WORKSPACE PREVIOUS_OUTPUT < "$STATE_FILE"
+    if [[ -z "$PREVIOUS_WORKSPACE" || -z "$PREVIOUS_OUTPUT" ]]; then
+        echo "Saved scratchpad workspace state is invalid" >&2
+        exit 1
+    fi
+
+    if ! swaymsg "focus output \"$PREVIOUS_OUTPUT\"" ||
+        ! swaymsg "workspace \"$PREVIOUS_WORKSPACE\""; then
+        echo "Unable to restore workspace $PREVIOUS_WORKSPACE on $PREVIOUS_OUTPUT" >&2
+        exit 1
+    fi
+
+    rm -f "$STATE_FILE"
+    exit 0
+fi
+
+if ! printf '%s\t%s\n' "$CURRENT_WORKSPACE" "$CURRENT_OUTPUT" > "$STATE_FILE"; then
+    echo "Unable to save the current workspace for scratchpad toggle" >&2
+    exit 1
+fi
+
+if ! swaymsg 'workspace "scratchpad"'; then
+    echo "Unable to switch to the scratchpad workspace" >&2
+    exit 1
+fi
+
+if ! swaymsg "move workspace to output \"$CURRENT_OUTPUT\""; then
+    echo "Unable to move the scratchpad workspace to output $CURRENT_OUTPUT" >&2
+    exit 1
 fi
