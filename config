@@ -24,7 +24,7 @@ workspace 1
 set $cl_back #231f20
 exec firefox
 
-exec '~/.config/sway/scripts/random-wallpaper.sh'
+exec ~/.config/sway/scripts/random-wallpaper.sh
 
 exec 'sleep 3; swaymsg workspace 1'
 
@@ -122,11 +122,7 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
-bar {
-    swaybar_command waybar \
-    -c "$HOME/.config/themes/current/waybar/config" \
-    -s "$HOME/.config/themes/current/waybar/style.css" &
-}
+exec_always sh -c 'pgrep -x waybar >/dev/null || waybar -c "$HOME/.config/themes/current/waybar/config" -s "$HOME/.config/themes/current/waybar/style.css"'
 
 #--------------#
 #  Clear Mode  #
