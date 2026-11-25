@@ -18,7 +18,7 @@ workspace 2 output HDMI-A-1
 workspace 3 output DP-1
 
 # Autostarts
-exec foot --server --name footserver
+exec foot --server
 
 workspace 1
 set $cl_back #231f20
